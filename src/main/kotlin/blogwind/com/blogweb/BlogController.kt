@@ -17,6 +17,4 @@ class BlogController(private val backendApi: BackendApi, val usernameService: Us
                     "</body></html>"
         }
     }
-
-
 }
