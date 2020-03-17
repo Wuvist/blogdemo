@@ -1,3 +1,8 @@
 micronaut:
   application:
     name: blogapi
+
+blogapi:
+  version: 0.0.1
+  backend:
+    url: http://localhost:8000
