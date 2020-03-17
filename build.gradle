@@ -7,18 +7,18 @@ plugins {
 }
 
 
-
 version "0.1"
 group "blogwind.com"
 
 repositories {
     mavenCentral()
     maven { url "https://jcenter.bintray.com" }
+    maven { url 'https://www.jitpack.io' }
 }
 
 configurations {
     // for dependencies that are needed for development only
-    developmentOnly 
+    developmentOnly
 }
 
 dependencies {
@@ -51,24 +51,23 @@ test {
 }
 
 allOpen {
-	annotation("io.micronaut.aop.Around")
+    annotation("io.micronaut.aop.Around")
 }
 
 compileKotlin {
-	kotlinOptions {
-	    jvmTarget = '1.8' 
-	    //Will retain parameter names for Java reflection
-	    javaParameters = true 
-	}
+    kotlinOptions {
+        jvmTarget = '1.8'
+        //Will retain parameter names for Java reflection
+        javaParameters = true
+    }
 }
 
 compileTestKotlin {
-	kotlinOptions {
-	    jvmTarget = '1.8' 
-	    javaParameters = true 
-	}
+    kotlinOptions {
+        jvmTarget = '1.8'
+        javaParameters = true
+    }
 }
-
 
 
 shadowJar {

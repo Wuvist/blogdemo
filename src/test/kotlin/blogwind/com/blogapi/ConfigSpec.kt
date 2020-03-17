@@ -11,6 +11,8 @@ class ConfigSpec : StringSpec() {
     lateinit var config: Config
 
     init {
-        config.backend.url shouldBe "http://localhost:8000"
+        "test config value from config file" {
+            config.backend.url shouldBe "http://localhost:8000"
+        }
     }
 }
