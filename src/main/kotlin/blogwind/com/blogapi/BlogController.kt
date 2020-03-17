@@ -18,7 +18,11 @@ class BlogController(private val backendApi: BackendApi) {
         }
     }
 
+    private val usernames = mapOf<Int, String>(
+            1 to "John Doe"
+    )
+
     private fun getUsername(userId: Int): String {
-        return "John Doe"
+        return usernames.getValue(userId)
     }
 }
