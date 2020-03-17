@@ -1,4 +1,4 @@
-package blogwind.com.blogapi
+package blogwind.com.blogweb
 
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get

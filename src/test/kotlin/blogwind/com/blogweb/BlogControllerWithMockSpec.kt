@@ -1,4 +1,4 @@
-package blogwind.com.blogapi
+package blogwind.com.blogweb
 
 import com.blogwind.easywebmock.MockServerManager
 import io.kotlintest.shouldBe

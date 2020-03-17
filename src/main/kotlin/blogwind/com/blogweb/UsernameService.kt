@@ -1,4 +1,4 @@
-package blogwind.com.blogapi
+package blogwind.com.blogweb
 
 import javax.inject.Singleton
 

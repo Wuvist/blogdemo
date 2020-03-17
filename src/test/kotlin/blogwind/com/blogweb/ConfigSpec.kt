@@ -1,4 +1,4 @@
-package blogwind.com.blogapi
+package blogwind.com.blogweb
 
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec

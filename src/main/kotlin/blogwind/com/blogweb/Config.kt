@@ -1,4 +1,4 @@
-package blogwind.com.blogapi
+package blogwind.com.blogweb
 
 import io.micronaut.context.annotation.ConfigurationBuilder
 import io.micronaut.context.annotation.ConfigurationProperties
