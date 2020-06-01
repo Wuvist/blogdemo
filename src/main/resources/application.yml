@@ -2,6 +2,24 @@ micronaut:
   application:
     name: blogapi
 
+endpoints:
+  routes:
+    enabled: true
+    sensitive: false
+  health:
+    enabled: true
+    sensitive: false
+    details-visible: ANONYMOUS
+  env:
+    enabled: true
+    sensitive: false
+  info:
+    enabled: true
+    sensitive: false
+  metrics:
+    enabled: true
+    sensitive: false
+
 blogapi:
   version: 0.0.1
   backend:
