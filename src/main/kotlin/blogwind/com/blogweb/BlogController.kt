@@ -9,12 +9,17 @@ import io.reactivex.Single
 class BlogController(private val backendApi: BackendApi, val usernameService: UsernameService) {
     @Get("/{id}")
     fun get(@PathVariable id: Int): Single<String> {
-        return backendApi.blog(id).map {
-            "<htm><body>" +
-                    "<h1>${it.title}</h1>" +
-                    "<h2>${usernameService.getUsername(it.userId)}</h2>" +
-                    "<p>${it.content}</p>" +
-                    "</body></html>"
-        }
+        val result = backendApi.blog(id)
+        result.onErrorReturnItem(Blog(0, 0, "", ""))
+
+        return result.flatMap {
+            usernameService.getUsername(it.userId).map { username ->
+                "<htm><body>" +
+                        "<h1>${it.title}</h1>" +
+                        "<h2>${username}</h2>" +
+                        "<p>${it.content}</p>" +
+                        "</body></html>"
+            }
+        }.onErrorReturnItem("error")
     }
 }

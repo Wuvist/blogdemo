@@ -1,15 +1,14 @@
 package blogwind.com.blogweb
 
 import com.blogwind.easywebmock.MockServerManager
-import io.kotlintest.matchers.string.shouldContain
 import io.kotlintest.shouldBe
-import io.kotlintest.shouldThrow
 import io.kotlintest.specs.StringSpec
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.annotation.Client
-import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.test.annotation.MicronautTest
 import io.micronaut.test.support.TestPropertyProvider
+import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.RecordedRequest
 import javax.inject.Inject
 
 @MicronautTest
@@ -21,9 +20,20 @@ class BlogControllerSpec : StringSpec(), TestPropertyProvider {
     @field:Client("/")
     lateinit var client: HttpClient
 
+    @Inject
+    lateinit var backendApi: BackendApi
+
     init {
         "test overriding config value from application file" {
             config.backend.url shouldBe MockServerManager.getUrl()
+        }
+
+        "api" {
+            val b = Blog(1, 1, "title", "")
+            MockServerManager.setDefaultResponse("/home", fun(request: RecordedRequest): MockResponse {
+                return MockResponse().setResponseCode(200).setBody(request.getHeader("X-Title")!!)
+            })
+            backendApi.home(b).blockingGet() shouldBe "title"
         }
 
         "test get blog" {
@@ -38,11 +48,7 @@ class BlogControllerSpec : StringSpec(), TestPropertyProvider {
             MockServerManager.setOneTimeResponseJson("/blog",
                     Blog(1, 2, "title", "bingo"))
 
-            val exception = shouldThrow<HttpClientResponseException> {
-                client.toBlocking().retrieve("/blog/1")
-            }
-
-            exception.message shouldContain "Key 2 is missing in the map"
+            client.toBlocking().retrieve("/blog/1") shouldBe "error"
         }
     }
 

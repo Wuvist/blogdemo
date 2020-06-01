@@ -11,6 +11,8 @@ import io.micronaut.test.extensions.kotlintest.MicronautKotlinTestExtension.getM
 import io.micronaut.test.support.TestPropertyProvider
 import io.mockk.every
 import io.mockk.mockk
+import io.reactivex.Single
+import java.security.InvalidParameterException
 import javax.inject.Inject
 
 @MicronautTest
@@ -28,10 +30,21 @@ class BlogControllerWithMockSpec : StringSpec(), TestPropertyProvider {
                     Blog(1, 2, "title", "bingo"))
 
             val mock = getMock(usernameService)
-            every { mock.getUsername(any()) } returns "Jane Doe"
+            every { mock.getUsername(any()) } returns Single.just("Jane Doe")
 
             var rsp: String = client.toBlocking().retrieve("/blog/1")
             rsp shouldBe "<htm><body><h1>title</h1><h2>Jane Doe</h2><p>bingo</p></body></html>"
+        }
+
+        "test error" {
+            MockServerManager.setOneTimeResponseJson("/blog",
+                    Blog(1, 2, "title", "bingo"))
+
+            val mock = getMock(usernameService)
+            every { mock.getUsername(any()) } throws InvalidParameterException("mio")
+
+            var rsp: String = client.toBlocking().retrieve("/blog/1")
+            rsp shouldBe "error"
         }
     }
 
