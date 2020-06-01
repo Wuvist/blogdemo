@@ -4,6 +4,7 @@ plugins {
     id "org.jetbrains.kotlin.plugin.allopen" version "1.3.50"
     id "com.github.johnrengelman.shadow" version "5.2.0"
     id "application"
+    id 'com.palantir.docker' version '0.25.0'
 }
 
 
@@ -19,6 +20,11 @@ repositories {
 configurations {
     // for dependencies that are needed for development only
     developmentOnly
+}
+
+docker {
+    name 'hub.docker.com/wuvist/blogapi:1.0'
+    copySpec.from("build/libs").into("build/libs")
 }
 
 dependencies {
