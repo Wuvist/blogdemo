@@ -1,5 +1,6 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.gradle
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 
 /*
@@ -27,7 +28,9 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 version = "2020.1"
 
 project {
-
+    params {
+        text("env.APP_ID", "blogapi", allowEmpty = false, readOnly = true)
+    }
     buildType(Build)
 }
 
@@ -42,6 +45,10 @@ object Build : BuildType({
         gradle {
             tasks = "clean build docker"
             buildFile = ""
+        }
+        script {
+            name = "Gen manifest"
+            scriptContent = "./scripts/gen.sh %env.APP_ID%"
         }
     }
 
