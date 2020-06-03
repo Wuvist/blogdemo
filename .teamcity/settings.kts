@@ -37,6 +37,8 @@ project {
 object Build : BuildType({
     name = "Build"
 
+    artifactRules = "artifact_manifest.sh\n%env.APP_ID%-*.jar"
+
     vcs {
         root(DslContext.settingsRoot)
     }
@@ -54,6 +56,7 @@ object Build : BuildType({
 
     triggers {
         vcs {
+            branchFilter = "master"
         }
     }
 })
