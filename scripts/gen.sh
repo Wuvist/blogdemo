@@ -4,7 +4,7 @@ set -e
 
 APP_ID=$1
 
-GIT_HASH=' git rev-parse --short HEAD'
+GIT_HASH='git rev-parse --short HEAD'
 ARTIFACT_VERSION=${BUILD_NUMBER}-${GIT_HASH}
 
 echo "[INFO] setting environment variable ARTIFACT VERSION: ${ARTIFACT_VERSION} for Teamcity"
