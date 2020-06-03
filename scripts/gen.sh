@@ -8,8 +8,9 @@ GIT_HASH=`git rev-parse --short HEAD`
 ARTIFACT_VERSION=${BUILD_NUMBER}-${GIT_HASH}
 
 echo "[INFO] setting environment variable ARTIFACT VERSION: ${ARTIFACT_VERSION} for Teamcity"
-
-mv build/libs/${APP_ID}-*-*.jar ${APP_ID}-${ARTIFACT_VERSION}.jar
+mkdir -p target
+rm target/*.jar
+mv build/libs/${APP_ID}-*-*.jar target/${APP_ID}-${ARTIFACT_VERSION}.jar
 
 echo "Generating artifact manifest for audit/verification"
 cat > artifact_manifest.sh <<EOL

@@ -37,7 +37,7 @@ project {
 object Build : BuildType({
     name = "Build"
 
-    artifactRules = "artifact_manifest.sh\n%env.APP_ID%-*.jar"
+    artifactRules = "artifact_manifest.sh\ntarget/*.jar"
 
     vcs {
         root(DslContext.settingsRoot)
