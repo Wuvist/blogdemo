@@ -14,6 +14,6 @@ changeBuildType(RelativeId("Build")) {
         check(branchFilter == "+:*") {
             "Unexpected option value: branchFilter = $branchFilter"
         }
-        branchFilter = "master"
+        branchFilter = "+:master"
     }
 }
