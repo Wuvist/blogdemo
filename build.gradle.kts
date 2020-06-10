@@ -1,7 +1,9 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.jetbrains.kotlin.gradle.tasks.*
 
 val developmentOnly: Configuration by configurations.creating
 val micronautVersion: String by project
+val micronautDataVersion: String by project
 val kotlinVersion: String by project
 
 plugins {
@@ -38,13 +40,18 @@ dependencies {
     implementation("io.micronaut:micronaut-http-server-netty")
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-management")
+    implementation("jakarta.persistence:jakarta.persistence-api:2.2.2")
+    implementation("io.micronaut.data:micronaut-data-jdbc:$micronautDataVersion")
     kapt(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     kapt("io.micronaut:micronaut-inject-java")
     kapt("io.micronaut:micronaut-validation")
+    kapt("io.micronaut.data:micronaut-data-processor:$micronautDataVersion")
     kaptTest(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     kaptTest("io.micronaut:micronaut-inject-java")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8")
     runtimeOnly("ch.qos.logback:logback-classic:1.2.3")
+    runtimeOnly("com.h2database:h2")
+    implementation("io.micronaut.configuration:micronaut-jdbc-hikari")
     testImplementation(platform("io.micronaut:micronaut-bom:$$micronautVersion"))
     testImplementation("io.micronaut.test:micronaut-test-kotlintest")
     testImplementation("io.mockk:mockk:1.9.3")
@@ -53,7 +60,6 @@ dependencies {
     testImplementation("com.squareup.okhttp3:mockwebserver:4.3.1")
 }
 
-//test.classpath(+= configurations.developmentOnly)
 application {
     version = "0.1"
     group = "blogwind.com"
@@ -70,6 +76,7 @@ tasks {
     }
 
     withType<Test>{
+        classpath = classpath.plus(configurations["developmentOnly"])
         useJUnitPlatform()
     }
 

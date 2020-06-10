@@ -11,6 +11,7 @@ import io.micronaut.http.filter.HttpClientFilter
 import io.reactivex.Single
 import org.reactivestreams.Publisher
 import javax.inject.Singleton
+import javax.persistence.*
 
 @Client("\${blogapi.backend.url}")
 interface BackendApi : UserAPI {
@@ -44,4 +45,7 @@ class UserAuthClientFilter : HttpClientFilter {
 @Target(AnnotationTarget.CLASS, AnnotationTarget.VALUE_PARAMETER)
 annotation class UserAuth
 
-data class Blog(val blogId: Int, val userId: Int, val title: String, val content: String)
+@Entity
+data class Blog(@Id
+                @GeneratedValue
+                var blogId: Int?, val userId: Int, val title: String, val content: String)
