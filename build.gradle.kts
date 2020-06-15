@@ -20,6 +20,7 @@ repositories {
     mavenCentral()
     maven("https://jcenter.bintray.com")
     maven("https://www.jitpack.io")
+    maven("http://nexus.saas.hand-china.com/content/repositories/rdc/")
 }
 
 configurations {
@@ -58,6 +59,7 @@ dependencies {
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.3.2")
     testImplementation("com.github.Wuvist:easywebmock:master-SNAPSHOT")
     testImplementation("com.squareup.okhttp3:mockwebserver:4.3.1")
+    testRuntimeOnly("com.oracle:ojdbc7:12.1.0.2")
 }
 
 application {

@@ -44,8 +44,3 @@ class UserAuthClientFilter : HttpClientFilter {
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.VALUE_PARAMETER)
 annotation class UserAuth
-
-@Entity
-data class Blog(@Id
-                @GeneratedValue
-                var blogId: Int?, val userId: Int, val title: String, val content: String)
