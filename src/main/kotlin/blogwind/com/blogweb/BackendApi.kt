@@ -12,7 +12,6 @@ import io.reactivex.Single
 import kotlinx.coroutines.rx2.await
 import org.reactivestreams.Publisher
 import javax.inject.Singleton
-import javax.persistence.*
 
 @Client("\${blogapi.backend.url}")
 interface BackendApi : UserAPI {
