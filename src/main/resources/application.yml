@@ -26,4 +26,4 @@ blogapi:
     url: http://localhost:8000
 datasources:
   default:
-    dummy: dummy
+    customerProvider: true

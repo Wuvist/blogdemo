@@ -17,7 +17,7 @@ class DataSourceOracle(config: Config) {
     @EachBean(DatasourceConfiguration::class)
     @Primary
 //    @Singleton
-    @Requires(property = "datasources.default.dummy")
+    @Requires(property = "datasources.default.customerProvider", value = "true")
     fun GetDataSource():DataSource {
         return mainDb
     }
