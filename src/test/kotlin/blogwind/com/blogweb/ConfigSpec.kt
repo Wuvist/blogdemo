@@ -8,7 +8,7 @@ import javax.inject.Inject
 import javax.inject.Named
 import javax.sql.DataSource
 
-@MicronautTest(environments = ["dbmock"], transactional = false)
+@MicronautTest(environments = ["dbmock"])
 class ConfigSpec : StringSpec() {
     @Inject
     lateinit var bookRepo: BookRepo
