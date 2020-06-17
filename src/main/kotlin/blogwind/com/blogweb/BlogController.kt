@@ -6,20 +6,24 @@ import io.micronaut.http.annotation.PathVariable
 import io.reactivex.Single
 
 @Controller("/blog")
-class BlogController(private val backendApi: BackendApi, val usernameService: UsernameService) {
+class BlogController(private val blogService: BlogService, val usernameService: UsernameServiceAsync) {
     @Get("/{id}")
-    fun get(@PathVariable id: Int): Single<String> {
-        val result = backendApi.blog(id)
-        result.onErrorReturnItem(Blog(0, 0, "", ""))
+    suspend fun get(@PathVariable id: Int): String {
+        val blog = try {
+            blogService.blog(id)
+        } catch (e: Exception) {
+            Blog(0, 0, "", "")
+        }
 
-        return result.flatMap {
-            usernameService.getUsername(it.userId).map { username ->
-                "<htm><body>" +
-                        "<h1>${it.title}</h1>" +
-                        "<h2>${username}</h2>" +
-                        "<p>${it.content}</p>" +
-                        "</body></html>"
-            }
-        }.onErrorReturnItem("error")
+        try {
+            val username = usernameService.getUsername(blog.userId)
+            return "<htm><body>" +
+                    "<h1>${blog.title}</h1>" +
+                    "<h2>${username}</h2>" +
+                    "<p>${blog.content}</p>" +
+                    "</body></html>"
+        }catch (e: Exception) {
+            return "error"
+        }
     }
 }

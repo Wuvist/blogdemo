@@ -43,6 +43,8 @@ dependencies {
     implementation("io.micronaut:micronaut-management")
     implementation("jakarta.persistence:jakarta.persistence-api:2.2.2")
     implementation("io.micronaut.data:micronaut-data-jdbc:$micronautDataVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.3.7")
     kapt(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     kapt("io.micronaut:micronaut-inject-java")
     kapt("io.micronaut:micronaut-validation")

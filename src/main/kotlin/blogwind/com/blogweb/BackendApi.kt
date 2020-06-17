@@ -9,6 +9,7 @@ import io.micronaut.http.client.annotation.Client
 import io.micronaut.http.filter.ClientFilterChain
 import io.micronaut.http.filter.HttpClientFilter
 import io.reactivex.Single
+import kotlinx.coroutines.rx2.await
 import org.reactivestreams.Publisher
 import javax.inject.Singleton
 import javax.persistence.*
@@ -20,6 +21,13 @@ interface BackendApi : UserAPI {
 
     @Get(value = "/home")
     fun home(@RequestAttribute("X-User") blog: Blog): Single<String>
+}
+
+@Singleton
+class BlogService (val backendApi: BackendApi) {
+    suspend fun blog(blogId: Int): Blog {
+        return backendApi.blog(blogId).await()
+    }
 }
 
 @UserAuth
