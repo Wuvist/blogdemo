@@ -2,11 +2,16 @@ package blogwind.com.blogweb
 
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
+import io.micronaut.context.annotation.Replaces
+import io.micronaut.data.jdbc.annotation.JdbcRepository
+import io.micronaut.data.model.query.builder.sql.Dialect
 import io.micronaut.test.annotation.MicronautTest
-import java.util.*
 import javax.inject.Inject
-import javax.inject.Named
 import javax.sql.DataSource
+
+@JdbcRepository(dialect = Dialect.H2)
+@Replaces(AuditLogRepo::class)
+interface AuditLogTestRepo : AuditLogRepo {}
 
 @MicronautTest(environments = ["dbmock"])
 class ConfigSpec : StringSpec() {
@@ -19,12 +24,20 @@ class ConfigSpec : StringSpec() {
     @Inject
     lateinit var auditLogRepo: AuditLogRepo
 
+    @Inject
+    lateinit var dataSource: DataSource
+
     init {
+        "test db" {
+            dataSource.connection.schema shouldBe "PUBLIC"
+        }
+
         "test log" {
-//            val log = AuditLog(1, 1, null, null, null, " ", "", 1)
-//            val log = AuditLog(1, 1, null, null, " ", "", 1)
-//            auditLogRepo.save(log)
-            auditLogRepo.count() shouldBe 2
+            auditLogRepo.count() shouldBe 0
+
+            val log = AuditLog(1, 1, null, null, null, " ", "", 1)
+            auditLogRepo.save(log)
+            auditLogRepo.count() shouldBe 1
         }
 //        "test status" {
 //            auditStatusRepo.deleteAll()
