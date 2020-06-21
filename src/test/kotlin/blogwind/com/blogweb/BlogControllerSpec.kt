@@ -29,7 +29,7 @@ class BlogControllerSpec : StringSpec(), TestPropertyProvider {
         }
 
         "api" {
-            val b = Blog(1, 1, "title", "")
+            val b = Blog(1, 1, "title", null,"")
             MockServerManager.setDefaultResponse("/home", fun(request: RecordedRequest): MockResponse {
                 return MockResponse().setResponseCode(200).setBody(request.getHeader("X-Title")!!)
             })
@@ -38,7 +38,7 @@ class BlogControllerSpec : StringSpec(), TestPropertyProvider {
 
         "test get blog" {
             MockServerManager.setOneTimeResponseJson("/blog",
-                    Blog(1, 1, "title", "bingo"))
+                    Blog(1, 1, "title", null,"bingo"))
 
             var rsp: String = client.toBlocking().retrieve("/blog/1")
             rsp shouldBe "<htm><body><h1>title</h1><h2>John Doe</h2><p>bingo</p></body></html>"
@@ -46,7 +46,7 @@ class BlogControllerSpec : StringSpec(), TestPropertyProvider {
 
         "test get blog error" {
             MockServerManager.setOneTimeResponseJson("/blog",
-                    Blog(1, 2, "title", "bingo"))
+                    Blog(1, 2, "title", null,"bingo"))
 
             client.toBlocking().retrieve("/blog/1") shouldBe "error"
         }

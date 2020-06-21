@@ -27,7 +27,7 @@ class BlogControllerWithMockSpec : StringSpec(), TestPropertyProvider {
     init {
         "test get blog via mock bean" {
             MockServerManager.setOneTimeResponseJson("/blog",
-                    Blog(1, 2, "title", "bingo"))
+                    Blog(1, 2, "title",null, "bingo"))
 
             val mock = getMock(usernameService)
             every { mock.getUsername(any()) } returns Single.just("Jane Doe")
@@ -38,7 +38,7 @@ class BlogControllerWithMockSpec : StringSpec(), TestPropertyProvider {
 
         "test error" {
             MockServerManager.setOneTimeResponseJson("/blog",
-                    Blog(1, 2, "title", "bingo"))
+                    Blog(1, 2, "title", null,"bingo"))
 
             val mock = getMock(usernameService)
             every { mock.getUsername(any()) } throws InvalidParameterException("mio")

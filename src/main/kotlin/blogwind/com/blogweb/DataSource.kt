@@ -12,10 +12,8 @@ import javax.sql.DataSource
 class DataSourceOracle(config: Config) {
     val mainDb = OracleProvider().CreateDB()
 
-    //    @Context
     @Replaces(DataSource::class)
     @EachBean(DatasourceConfiguration::class)
-//    @Singleton
     @Requires(property = "datasources.default.customerProvider", value = "true")
     fun GetDataSource(): DataSource {
         return mainDb

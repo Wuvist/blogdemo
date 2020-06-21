@@ -19,7 +19,6 @@ class UsernameServiceAsyncImpl(val usernameService: UsernameService) : UsernameS
     }
 }
 
-
 @Singleton
 class UsernameServiceImpl : UsernameService {
     private val usernames = mapOf<Int, String>(

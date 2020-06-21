@@ -23,7 +23,7 @@ interface BackendApi : UserAPI {
 }
 
 @Singleton
-class BlogService (val backendApi: BackendApi) {
+class BlogService(val backendApi: BackendApi) {
     suspend fun blog(blogId: Int): Blog {
         return backendApi.blog(blogId).await()
     }

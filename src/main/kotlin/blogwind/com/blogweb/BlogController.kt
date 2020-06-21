@@ -3,7 +3,6 @@ package blogwind.com.blogweb
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.PathVariable
-import io.reactivex.Single
 
 @Controller("/blog")
 class BlogController(private val blogService: BlogService, val usernameService: UsernameServiceAsync) {
@@ -12,7 +11,7 @@ class BlogController(private val blogService: BlogService, val usernameService: 
         val blog = try {
             blogService.blog(id)
         } catch (e: Exception) {
-            Blog(0, 0, "", "")
+            Blog(0, 0, "", null, "")
         }
 
         try {
@@ -22,7 +21,7 @@ class BlogController(private val blogService: BlogService, val usernameService: 
                     "<h2>${username}</h2>" +
                     "<p>${blog.content}</p>" +
                     "</body></html>"
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             return "error"
         }
     }
